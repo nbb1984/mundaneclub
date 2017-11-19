@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mundane Club</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+				<style>
+					body {						
+						background-image: url("./public/images/cleveland.jpg");
+					}
+
+					.navbar {
+						width: 100%;
+						background-color: none;
+            border: 1px solid white;
+
+					}
+					.nav-link {
+						color: white;
+					}
+
+          button {
+              background-color:#addfff, 
+              color: "#512da8"
+          }
+
+          h3 {
+              color: white;
+          }
+
+          h4 {
+              color: white;
+          }
+
+          .blog-body {
+              color: black;
+              border-radius: 4px;
+              background-color: white;
+              border: 1px solid #addfff;
+          }
+				</style>	
+
+</head>
+
+<body>
+    <div class="row">
+        <nav class="navbar navbar-expand-lg" >
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Schedule</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Roster</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Blog</a>
+                        </li>
+                    </ul>
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a class = "nav-link" href="#"><span class="glyphicon glyphicon-align-left"></i>Admin</a></li>
+			      </ul>
+
+                </div>
+
+					  			        
+        	</div>
+        </nav>
+    </div>
+
+    <div class = 'row'> 
+      <div class="container">
+        <div class="col-lg-12">
+          <div class="panel panel-primary text-center">
+            <br>
+            <br>
+            <div class="panel-heading">
+              <h3 class="panel-title">Message Board</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body text-center">
+                  <form onSubmit={this.handleSubmit}>
+                    <div class="form-group">
+                      <br />
+                      <input
+                        placeholder="Type Your Message Here"
+                        type="text"
+                        class="form-control text-center"
+                        id="term"
+                        required
+                      />
+                      <br />
+                      <button
+                        class="btn btn-default blue"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
+                <br /> 
+                <br />
+
+                <div class="panel-body text-center blog-body">
+                  <br>
+                  <br>
+                  <div class="panel-body text-center blog-item">
+                      <p>"Great Event! Delightful food, delightful people, delightful speaker"</p>
+                      <p><i>Socia L. Climber</i></p>
+                      <button type="button" class="btn btn-default">Delete</button>
+                  </div>
+                  <br /> 
+                  <br />                
+                  <div class="panel-body text-center blog-item">
+                      <p>"Terrible event, terrible people, terrible speaker!!!"</p>
+                      <p><i>Kermu D. Geon</i></p>
+                      <button type="button" class="btn btn-default">Delete</button>
+                                            <button type="button" class="btn btn-default">Comments(89)</button>
+
+                  </div>
+
+                  <br /> 
+                  <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>        
+    </div>
+</body>
+</html>
