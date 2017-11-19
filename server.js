@@ -29,7 +29,7 @@ app.use(cookieParser());
 
 // -------------------------------------------------
 // MongoDB Configuration configuration 
-mongoose.connect("mongodb://heroku_psz224z6:qis67obg0vmervf34ilrc6dpfj@ds113746.mlab.com:13746/heroku_psz224z6");
+mongoose.connect("mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub");
 var db = mongoose.connection;
 db.on("error", function(err) {
   console.log("Mongoose Error: ", err);
