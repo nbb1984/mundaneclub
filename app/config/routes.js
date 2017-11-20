@@ -20,18 +20,14 @@ var Main = require("../components/main");
 var Schedule = require("../components/children/schedule");
 var Roster = require("../components/children/roster");
 var Blog = require("../components/children/blog");
+var Welcome = require("../components/children/welcome");
 var Admin = require("../components/children/admin");
 var BlogEdit = require("../components/children/grandchildren/blogEdit");
 var ScheduleEdit = require("../components/children/grandchildren/scheduleEdit");
 var RosterEdit = require("../components/children/grandchildren/rosterEdit");
+var WelcomeEdit = require("../components/children/grandchildren/welcomeEdit");
 
 
-
-
-
-
-
-    
 module.exports= (
         <Router history={hashHistory}>
           <Route path="/" component={Main}>
@@ -39,15 +35,17 @@ module.exports= (
             <Route path="Schedule" component={Schedule}/>
             <Route path="Roster" component={Roster}/>
             <Route path="Blog" component={Blog}/>
+            <Route path="Welcome" component={Welcome}/>           
             <Route path="Admin" component={Admin}>
                 <Route path="BlogEdit" component={BlogEdit}/>
                 <Route path="ScheduleEdit" component={ScheduleEdit}/>
                 <Route path="RosterEdit" component={RosterEdit}/>
+                <Route path="WelcomeEdit" component={WelcomeEdit}/>                
                 <IndexRoute component={ScheduleEdit} />
             </Route>
 
             
-            <IndexRoute component={Schedule} />
+            <IndexRoute component={Welcome} />
             {/* If user selects any other path... we get the Schedule Route */}
             
           </Route>

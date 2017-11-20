@@ -170,13 +170,12 @@ var Roster = React.createClass({
                         <div className = "rosterEntry" key = {i}>
                           <div className="panel-body text-left schedule-item" style={smallPanelStyle}>
                               
-                              <p><b>{entry.memberName}</b></p>
-                              <p>{entry.memberAddress}</p>
-                              <p>{entry.memberCity}</p>
-                              <p>{entry.memberState}</p>
-                              <p>{entry.memberZip}</p>
-                              <p>{entry.memberCellPhone}</p>
-                              <p>{entry.memberEmail}</p>
+                              <p><b>Name:</b>{entry.memberName}</p>
+                              <p><b>Address:</b>{entry.memberAddress}</p>
+                              <p><b>City, State:</b>{entry.memberCity}, {entry.memberState}</p>
+                              <p><b>Zip:</b>{entry.memberZip}</p>
+                              <p><b>Cell Phone:</b>{entry.memberCellPhone}</p>
+                              <p><b>Email:</b>{entry.memberEmail}</p>
                           
                           </div>
                           <br></br> 
