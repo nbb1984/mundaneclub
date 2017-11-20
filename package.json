@@ -4,7 +4,7 @@
   "description": "A website for the Mundane Club of Cleveland",
   "engines": {
     "node": "6.10.2",
-    "node": "3.10.10"
+    "npm": "3.10.10"
   },
   "main": "public/login.html",
   "scripts": {
