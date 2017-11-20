@@ -2,7 +2,7 @@
   "name": "MundaneClub",
   "version": "1.0.0",
   "description": "A website for the Mundane Club of Cleveland",
-  "main": "server.js",
+  "main": "public/index2.html",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
