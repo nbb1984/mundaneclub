@@ -17,7 +17,7 @@ var schedule = require("./routes/schedule-routes");
 var blog = require("./routes/blog-routes");
 
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8000;
 
 app.use(logger("dev"));
 app.use(bodyParser.json());

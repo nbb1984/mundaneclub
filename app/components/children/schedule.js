@@ -3,7 +3,7 @@ var React = require("react");
 var helpers = require("../utils/helpers");
 var Typeahead = require('react-bootstrap-typeahead').Typeahead;
 var Schedule = React.createClass({
-  // Here we set a generic state associated with the text being usered for
+
   getInitialState: function() {
     var that = this;
     return{ScheduleItems:[], eventName: "this.state.eventName", 
