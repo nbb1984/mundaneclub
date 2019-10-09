@@ -1,7 +1,4 @@
 $(document).ready(function(){
-	console.log("hello");
-	$(".username").val("nicholas.bole@gmail.com");
-	$(".password").val("Google34");
 
 	if (window.location.search.substring(1) === "error"){
 		console.log('got this far');

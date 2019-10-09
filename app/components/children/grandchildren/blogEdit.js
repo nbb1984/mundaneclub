@@ -10,8 +10,7 @@ var BlogEdit = React.createClass({
 
   componentDidMount: function() {
     var that = this;
-    helpers.getBlogPosts().then(function(blogPosts){
-      console.log("got blog posts");
+    helpers.getItems("Blog/getAll").then(function(blogPosts){
       that.setState({blogPosts:blogPosts.data}, function(){
           console.log(blogPosts.data);
         });
@@ -32,8 +31,8 @@ var BlogEdit = React.createClass({
         postContent: this.state.postContent
       };
 
-    helpers.createBlogPost(newPost).then(function(){
-      helpers.getBlogPosts().then(function(blogPosts) {
+    helpers.createItem("Blog", newPost).then(function(){
+      helpers.getItems("Blog/getAll/").then(function(blogPosts) {
          that.setState({blogPosts: blogPosts.data});
        });    
     });
@@ -41,8 +40,8 @@ var BlogEdit = React.createClass({
 
   handleDelete: function(event) {
     var that = this;
-    helpers.deleteBlogPost(event.target.value).then(function(){
-      helpers.getBlogPosts().then(function(blogPosts) {
+    helpers.deleteItem("Blog/delete/" + event.target.value).then(function(){
+      helpers.getItems("Blog/getAll/").then(function(blogPosts) {
          that.setState({blogPosts: blogPosts.data});
        }); 
     });
@@ -51,7 +50,6 @@ var BlogEdit = React.createClass({
   render: function() {
     var that = this;
     var blogPosts = this.state.blogPosts ;
-    console.log(blogPosts);
     if (blogPosts.length === 0) {
       blogPosts = [
         {postAuthor: "Mary", 

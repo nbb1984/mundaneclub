@@ -4,10 +4,13 @@ var Roster = require('../models/roster_names');
 var path = require("path");
 
 
-router.post("/api/roster/", function(req, res) {
+router.post("/api/Roster/", function(req, res) {
 
-        var newRosterInfo ={
-            'memberName': req.body.memberName,
+        var newRosterInfo = {
+            'memberFirstName': req.body.memberFirstName,
+            'memberLastName': req.body.memberLastName,
+            'memberInformalName': req.body.memberInformalName,
+            'memberFullName': req.body.memberLastName + ', ' + req.body.memberFirstName +  ' (' + req.body.memberInformalName + ')',
             'memberAddress': req.body.memberAddress,
             'memberCity': req.body.memberCity,
             'memberState': req.body.memberState,
@@ -24,27 +27,30 @@ router.post("/api/roster/", function(req, res) {
             .then(function(update) {
                 // If there is no roster entry matching the id...
                 if (!update) {
+                    var newRosterEntry = new Roster(newRosterInfo);
                     // Save the new roster entry to the db
-                    Roster.create(newRosterInfo, function(error, doc) {
+                    newRosterEntry.save(newRosterInfo, function(error, doc) {
                         // Log any errors
                         if (!doc) {
                             console.log(error);
                         }
 
                         else {
+                        	console.log("I told you so");
                             return res.json(doc);
                         }
                     });
                 } 
 
                 else {
+                	console.log("Roster entry updated!!!!");
                     return res.json(update);
                 }
 
             });
 });
 
-router.get("/api/roster/", function(req, res) {
+router.get("/api/roster/getAll", function(req, res) {
     Roster.find({}).exec(function(err, result) {
         if (err) {
             throw err
@@ -56,24 +62,37 @@ router.get("/api/roster/", function(req, res) {
     });
 });
 
-router.get("/api/roster/find/:id", function(req, res) {
-    Roster.find({_id: req.params.id}).exec(function(err, result) {
+router.get("/api/roster/getOne/:id", function(req, res) {
+    Roster.find({memberFullName: req.params.id}).exec(function(err, result) {
         if (err) {
             throw err
         } 
         else {
+            console.log(result);
             return res.json(result);
         }
     });
 });
 
-router.get("/api/roster/:id", function(req, res) {
-        Roster.find({ _id: req.params.id })
-        .remove()
-        .exec(function (err, result) {
-          if (err) throw err;
-          return res.json(result);
-        });  
+router.get("/api/roster/editOne/:id", function(req, res) {
+    Roster.find({_id: req.params.id}).exec(function(err, result) {
+        if (err) {
+            throw err
+        } 
+        else {
+            console.log(result);
+            return res.json(result);
+        }
+    });
+});
+
+router.get("/api/Roster/delete/:id", function(req, res) {
+    Roster.find({ _id: req.params.id })
+    .remove()
+    .exec(function (err, result) {
+      if (err) throw err;
+      return res.json(result);
+    });  
 });
 
 module.exports = router;

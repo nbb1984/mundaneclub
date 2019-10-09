@@ -4,11 +4,14 @@ var helpers = require("../utils/helpers");
 var Link = require("react-router").Link;
 
 var Admin = React.createClass({
-  componentWillMount: function(){
-    console.log(this.props);
-  },
 
   render: function() {
+
+    const that = this;
+    var kid;
+    const children = React.Children.map(that.props.children, function(child) {
+        kid = React.cloneElement(child, {scrollUp: that.props.scrollUp, hoverLink: that.props.hoverLink, unHoverLink: that.props.unHoverLink});
+    });
 
     const rowStyle = {
       fontSize: "17px"
@@ -43,21 +46,21 @@ var Admin = React.createClass({
 
                     <button style = {adminButtonStyle}>
                       <li className="nav-item" style = {navItemStyle}>
-                          <Link to="/Admin/ScheduleEdit" className="nav-link" style = {navLinkStyle}>Edit Schedule </Link>
+                          <Link to="/Admin/WelcomeEdit" className="nav-link" style = {navLinkStyle}>Edit Welcome Page </Link>
                       </li>
                     </button>
 
-                    <br></br>
-                    <br></br>
+                    <button style = {adminButtonStyle}>
+                      <li className="nav-item" style = {navItemStyle}>
+                          <Link to="/Admin/ScheduleEdit" className="nav-link" style = {navLinkStyle}>Edit Schedule </Link>
+                      </li>
+                    </button>
 
                     <button style = {adminButtonStyle}>
                       <li className="nav-item" style = {navItemStyle}>
                           <Link to="/Admin/RosterEdit" className="nav-link" style = {navLinkStyle}>Edit Roster </Link>
                       </li>
                     </button>
-
-                    <br></br>
-                    <br></br>
 
                     <button style = {adminButtonStyle}>                    
                       <li className="nav-item" style = {navItemStyle}>
@@ -68,7 +71,7 @@ var Admin = React.createClass({
                     <br></br>
                   </ul>
               </div>
-              <div className = 'row'>{this.props.children}</div>
+              <div className = 'row'>{kid}</div>
             </div>
     );
   }

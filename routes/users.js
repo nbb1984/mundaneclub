@@ -24,7 +24,7 @@ router.post('/registerUser', function(req, res) {
             req.checkBody('email', 'Email is required').notEmpty();
             req.checkBody('email', 'Email is not valid').isEmail();
             req.checkBody('password', 'Password is required').notEmpty();            
-            req.checkBody('password', 'Password must be at least six characters and must not contain any special characters and must contain at least one number, one capital letter, and one lower case letter').isLength({ min: 6 }).matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
+            req.checkBody('password', 'Password must be at least six characters, must not contain any special characters, and must contain at least one number, one capital letter, and one lower case letter').isLength({ min: 6 }).matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/, "i");
             req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
             var errors = req.validationErrors();

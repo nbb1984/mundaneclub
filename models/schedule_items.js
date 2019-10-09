@@ -25,13 +25,19 @@ var ScheduleSchema = new Schema({
   },
   eventDescription: {
     type: String
-  }
+  },
+  eventCommentsVisible: {
+    type: Boolean,
+    default: false
+  },
+  eventComments: [{
+    type: Schema.Types.ObjectId,
+    ref: "ScheduleComments"
+  }]
 });
-// Remember, Mongoose will automatically save the ObjectIds of the searches
-// These ids are referred to in the Article model
-// Create the Note model with the NoteSchema
+
 var Schedule = mongoose.model("Schedule", ScheduleSchema);
-// Export the Note model
+
 module.exports = Schedule;
 
 

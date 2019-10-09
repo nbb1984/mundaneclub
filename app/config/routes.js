@@ -26,27 +26,27 @@ var BlogEdit = require("../components/children/grandchildren/blogEdit");
 var ScheduleEdit = require("../components/children/grandchildren/scheduleEdit");
 var RosterEdit = require("../components/children/grandchildren/rosterEdit");
 var WelcomeEdit = require("../components/children/grandchildren/welcomeEdit");
+var SearchResults = require("../components/children/searchResults");
 
 
 module.exports= (
         <Router history={hashHistory}>
           <Route path="/" component={Main}>
-            {/* If user selects one of the links in the navbar then show the appropriate component*/}
             <Route path="Schedule" component={Schedule}/>
             <Route path="Roster" component={Roster}/>
             <Route path="Blog" component={Blog}/>
-            <Route path="Welcome" component={Welcome}/>           
+            <Route path="Welcome" component={Welcome}/>  
+            <Route path="SearchResults" component={SearchResults}/>              
             <Route path="Admin" component={Admin}>
                 <Route path="BlogEdit" component={BlogEdit}/>
                 <Route path="ScheduleEdit" component={ScheduleEdit}/>
                 <Route path="RosterEdit" component={RosterEdit}/>
-                <Route path="WelcomeEdit" component={WelcomeEdit}/>                
+                <Route path="WelcomeEdit" component={WelcomeEdit}/>                           
                 <IndexRoute component={ScheduleEdit} />
             </Route>
 
             
             <IndexRoute component={Welcome} />
-            {/* If user selects any other path... we get the Schedule Route */}
             
           </Route>
         </Router>

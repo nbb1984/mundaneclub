@@ -5,7 +5,16 @@ var Schema = mongoose.Schema;
 // Create the Note schema
 var RosterSchema = new Schema({
   // Just a string
-  memberName: {
+  memberFirstName: {
+    type: String
+  },
+  memberLastName: {
+    type: String
+  },
+  memberInformalName: {
+    type: String
+  },
+  memberFullName: {
     type: String
   },
   memberAddress: {

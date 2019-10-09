@@ -5,7 +5,7 @@ var path = require("path");
 var moment = require("moment");
 
 
-router.post("/api/Blog/", function(req, res) {
+router.post("/api/Blog", function(req, res) {
 
         var newBlogInfo = {
             'postAuthor': req.body.postAuthor,
@@ -43,33 +43,19 @@ router.post("/api/Blog/", function(req, res) {
             });
 });
 
-router.get("/api/Blog/", function(req, res) {
+router.get("/api/Blog/getAll", function(req, res) {
     Blog.find({}).exec(function(err, result) {
         if (err) {
             throw err
         } 
 
         else {
-            console.log("got blog posts");
             return res.json(result);
         }
     });
 });
 
-router.get("/api/Blog/", function(req, res) {
-    Blog.find({_id: req.params.id}).exec(function(err, result) {
-        if (err) {
-            throw err
-        } 
-
-        else {
-            console.log("got blog posts");
-            return res.json(result);
-        }
-    });
-});
-
-router.get("/api/Blog/:postId", function(req, res) {
+router.get("/api/Blog/delete/:postId", function(req, res) {
         Blog.find({ _id: req.params.postId })
         .remove()
         .exec(function (err, result) {

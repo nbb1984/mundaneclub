@@ -10,7 +10,7 @@ var RosterEdit = React.createClass({
 
   componentDidMount: function() {
     var that = this;
-    helpers.getRosterEntries().then(function(RosterEntries){
+    helpers.getItems("Roster/getAll").then(function(RosterEntries){
       that.setState({RosterEntries:RosterEntries.data});
     });
   },
@@ -21,16 +21,17 @@ var RosterEdit = React.createClass({
   },
 
   handleSubmit: function() {
-
+    event.preventDefault();
     if (this.state.editButtonClicked) {
       this.setState({editButtonStyle: ""});
     }
-
-    event.preventDefault();
     var that = this;
     var newEntry = { 
         _id: this.state._id,
-        memberName: this.state.memberName, 
+        memberFirstName: this.state.memberFirstName, 
+        memberLastName: this.state.memberLastName,
+        memberInformalName: this.state.memberInformalName,
+        memberFullName: this.state.memberLastName + ", " + this.state.memberFirstName + " (" + this.state.memberInformalName + ")",
         memberAddress: this.state.memberAddress,
         memberCity: this.state.memberCity,
         memberState: this.state.memberState,
@@ -39,18 +40,46 @@ var RosterEdit = React.createClass({
         memberEmail: this.state.memberEmail
       };
 
-    helpers.createRosterEntry(newEntry).then(function(){
-      helpers.getRosterEntries().then(function(RosterEntries){
-        that.setState({RosterEntries: RosterEntries.data});
+    helpers.createItem("Roster", newEntry).then(function(){
+      helpers.getItems("Roster/getAll").then(function(RosterEntries){
+        that.setState({RosterEntries: RosterEntries.data}, function(){
+		    that.setState({ 
+		        _id: "",
+		        memberFirstName: "", 
+		        memberLastName: "",
+		        memberInformalName: "",
+		        memberAddress: "",
+		        memberCity: "",
+		        memberState: "",
+		        memberZip: "",
+		        memberCellPhone: "",
+		        memberEmail: ""
+		      });
+        });
       });
     });
+  },
+
+  handleClear: function() {
+	    this.setState({ 
+	        _id: "",
+	        memberFirstName: "", 
+	        memberLastName: "",
+	        memberInformalName: "",
+	        memberAddress: "",
+	        memberCity: "",
+	        memberState: "",
+	        memberZip: "",
+	        memberCellPhone: "",
+	        memberEmail: ""
+	      });
   },
 
   handleDelete: function(event) {
     event.preventDefault();
     var that = this;
-    helpers.deleteRosterEntry(event.target.value).then(function(){
-      helpers.getRosterEntries().then(function(RosterEntries){
+    helpers.deleteItem("Roster/delete/" + event.target.value).then(function(){
+      helpers.getItems("Roster/getAll").then(function(RosterEntries){
         that.setState({RosterEntries: RosterEntries.data});
       });
     });
@@ -61,11 +90,15 @@ var RosterEdit = React.createClass({
     //event.target.style.backgroundColor = "pink";
     this.setState({editButtonClicked: true});
     var that = this;
-    helpers.getRosterEntry(event.target.value).then(function(RosterEntry){
+    console.log (event.target.value);
+    helpers.getItem("Roster/editOne/" + event.target.value).then(function(RosterEntry){
+      console.log(RosterEntry);
       var Data = RosterEntry.data[0];
       that.setState({
         _id: Data._id,
-        memberName: Data.memberName, 
+        memberFirstName: Data.memberFirstName, 
+        memberLastName: Data.memberLastName,
+        memberInformalName: Data.memberInformalName,
         memberAddress: Data.memberAddress,
         memberCity: Data.memberCity,
         memberState: Data.memberState,
@@ -79,11 +112,12 @@ var RosterEdit = React.createClass({
   render: function() {
     var that = this;
     var RosterEntries = this.state.RosterEntries;
-    console.log(RosterEntries);
     if (RosterEntries.length === 0) {
       RosterEntries = [
-        {memberName: "Blank", 
-        memberAddress: "555 North Fifth Street 55555",
+        {memberFirstName: "Blank", 
+        memberLastName: "Blank", 
+        memberInformalName: "Blank",
+        memberAddress: "555 North Fifth Street",
         memberCity: "Nothingville",
         memberState: "XX",
         memberZip: "XXXXX",
@@ -91,8 +125,10 @@ var RosterEdit = React.createClass({
         memberEmail: "nothing@blankemail.com"
         },
 
-        {memberName: "Blank", 
-        memberAddress: "555 North Fifth Street 55555",
+        {memberFirstName: "Blank", 
+        memberLastName: "Blank",
+        memberInformalName: "Blank",
+        memberAddress: "555 North Fifth Street",
         memberCity: "Nothingville",
         memberState: "XX",
         memberZip: "XXXXX",
@@ -102,7 +138,7 @@ var RosterEdit = React.createClass({
       ];
     }
     const componentStyle = {
-      fontFamily: "font-family: Lucida Console, Courier, monospace"
+      
     };
     const inPanelStyle = {
       backgroundColor:"transparent",
@@ -126,7 +162,10 @@ var RosterEdit = React.createClass({
     };
 
     const memberAddressStyle = {
-      fontSize: "20px"
+      backgroundColor: "none",
+      border: "none",
+      fontSize: "18px",
+      fontFamily: "Lucida Console, Courier, monospace"
     };
 
     const dateStyle = {
@@ -153,16 +192,36 @@ var RosterEdit = React.createClass({
                 </div>
                 <div className="panel-body">
                     <div className="panel-body text-left input-panel" style={inPanelStyle}>
-                      <form onSubmit={this.handleSubmit}>
+                      <form onSubmit={this.handleSubmit} noValidate = 'novalidate'>
                         <div className="form-group">
                           <br></br>
                           <input
-                            value = {this.state.memberName}
+                            value = {this.state.memberFirstName}
                             onChange = {this.handleChange}
-                            placeholder="Name"
+                            placeholder="First Name"
                             type="text"
                             className="form-control text-left"
-                            id="memberName"
+                            id="memberFirstName"
+                            required
+                            style={inputStyle}
+                          />
+                          <input
+                            value = {this.state.memberLastName}
+                            onChange = {this.handleChange}
+                            placeholder="Last Name"
+                            type="text"
+                            className="form-control text-left"
+                            id="memberLastName"
+                            required
+                            style={inputStyle}
+                          />
+                          <input
+                            value = {this.state.memberInformalName}
+                            onChange = {this.handleChange}
+                            placeholder="Informal Name"
+                            type="text"
+                            className="form-control text-left"
+                            id="memberInformalName"
                             required
                             style={inputStyle}
                           />
@@ -223,10 +282,17 @@ var RosterEdit = React.createClass({
                           />
                           <br />
                           <button
-                            className="btn btn-default blue"
+                            className="btn btn-default submit"
                             type="submit"
                           >
                             Submit
+                          </button>
+                          <button
+                            className="btn btn-default clear"
+                            type="reset"
+                            onClick = {this.handleClear}
+                          >
+                            Clear
                           </button>
                         </div>
                       </form>
@@ -241,13 +307,12 @@ var RosterEdit = React.createClass({
                       <br></br>
                   {RosterEntries.map(function(entry, i) {
                       return (
-                        <div className = "scheduleEntry" key = {i}>
+                        <div className = "memberEntry" key = {i}>
                           <div className="panel-body text-left schedule-item" style={smallPanelStyle}>
                               
-                              <p><b>{entry.memberName}</b></p>
+                              <p><b>{entry.memberLastName}, {entry.memberFirstName} ({entry.memberInformalName})</b> </p>
                               <p>{entry.memberAddress}</p>
-                              <p>{entry.memberCity}</p>
-                              <p>{entry.memberState}</p>
+                              <p>{entry.memberCity}, {entry.memberState}</p>
                               <p>{entry.memberZip}</p>
                               <p>{entry.memberCellPhone}</p>
                               <p>{entry.memberEmail}</p>

@@ -1,49 +1,22 @@
 var axios = require("axios");
 var helper = {
-  // This logs in.
-  getScheduleItems: function() {
-    return axios.get("/api/schedule");
+
+  createItem: function(route, newItem) {
+  	console.log(route);
+  	console.log(newItem);
+    return axios.post("/api/" + route, newItem);
   },
 
-  // This function hits our own server to retrieve the record of this user 
-  createScheduleItem: function(newItem) {
-    return axios.post("/api/schedule", newItem);
+  getItem: function(route) {
+    return axios.get("/api/" + route);
   },
 
-  getScheduleItem: function(itemId) {
-    return axios.get("api/schedule/" + itemId);
+  getItems: function(route) {
+    return axios.get("/api/" + route);
   },
 
-  deleteScheduleItem: function (itemId) {
-    return axios.get("/api/schedule/" + itemId);
-  },
-
-  getRosterEntries: function() {
-    return axios.get("/api/roster");
-  },
-
-  getRosterEntry: function(entryId) {
-    return axios.get("/api/roster/find/" + entryId);
-  },
-
-  createRosterEntry: function(newEntry) {
-    return axios.post("/api/roster", newEntry);
-  },
-
-  deleteRosterEntry: function (entryId) {
-    return axios.get("/api/roster/" + entryId);
-  },
-
-  getBlogPosts: function(postId) {
-      return axios.get("/api/blog");
-  },
-
-  createBlogPost: function(newPost) {
-    return axios.post("/api/blog", newPost);
-  },
-
-  deleteBlogPost: function(postId) {
-    return axios.get("/api/blog/" + postId);
+  deleteItem: function (route) {
+    return axios.get("/api/" + route);
   },
 
   runQuery: function(schema, query) {

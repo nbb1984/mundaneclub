@@ -15,9 +15,12 @@ var routes = require("./routes/index");
 var roster = require("./routes/roster-routes");
 var schedule = require("./routes/schedule-routes");
 var blog = require("./routes/blog-routes");
+var welcome = require("./routes/welcome-routes");
+var announcements = require("./routes/announcement-routes");
+
 
 var app = express();
-var PORT = process.env.PORT || 8000;
+var PORT = process.env.PORT || 3000;
 
 app.use(logger("dev"));
 app.use(bodyParser.json());
@@ -29,7 +32,8 @@ app.use(cookieParser());
 
 // -------------------------------------------------
 // MongoDB Configuration configuration 
-mongoose.connect("mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub");
+mongoose.connect("mongodb://localhost/mundaneclub");
+//mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub
 var db = mongoose.connection;
 db.on("error", function(err) {
   console.log("Mongoose Error: ", err);
@@ -100,6 +104,8 @@ app.use('/', users);
 app.use('/', blog);
 app.use('/', roster);
 app.use('/', schedule);
+app.use('/', announcements);
+app.use('/', welcome);
 
 // -------------------------------------------------
 // Listener

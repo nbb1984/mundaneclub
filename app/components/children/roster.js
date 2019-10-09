@@ -4,148 +4,103 @@ var helpers = require("../utils/helpers");
 var Typeahead = require('react-bootstrap-typeahead').Typeahead;
 
 var Roster = React.createClass({
-  // Here we set a generic state associated with the text being usered for
-  getInitialState: function() {
-    var that = this;
-    return{RosterEntries:[]};
-  },
+    // Here we set a generic state associated with the text being usered for
+    getInitialState: function() {
+        var that = this;
+        return { RosterEntries: [] };
+    },
 
-  componentDidMount: function() {
-    var that = this;
-    helpers.getRosterEntries().then(function(RosterEntries){
-      that.setState({RosterEntries:RosterEntries.data});
-    });
-  },
+    componentDidMount: function() {
+        var that = this;
+        helpers.getItems("Roster/getAll").then(function(RosterEntries) {
+            that.setState({ RosterEntries: RosterEntries.data });
+        });
+    },
 
-  handleChange: function (event) {
-    var field = event.target.id;
-    this.setState({[field]: event.target.value});
-  },
-
-  handleSubmit: function() {
-    event.preventDefault();
-    var that = this;
-    var newEntry = { 
-        _id: this.state._id,
-        memberName: this.state.memberName, 
-        memberAddress: this.state.memberAddress,
-        memberCity: this.state.memberCity,
-        memberState: this.state.memberState,
-        memberZip: this.state.memberZip,
-        memberCellPhone: this.state.memberCellPhone,
-        memberEmail: this.state.memberEmail
-      };
-    helpers.createRosterEntry(newEntry).then(function(){
-      helpers.getRosterEntries().then(function(RosterEntries){
-        that.setState({RosterEntries: RosterEntries.data});
-      });
-    });
-  },
-
-  handleDelete: function(event) {
-    event.preventDefault();
-    var that = this;
-    helpers.deleteRosterEntry(event.target.value).then(function(){
-      helpers.getRosterEntries().then(function(RosterEntries){
-        that.setState({RosterEntries: RosterEntries.data});
-      });
-    });
-  },
-
-  handleEdit: function(event) {
-    event.preventDefault();
-    var that = this;
-    helpers.getRosterEntry(event.target.value).then(function(RosterEntry){
-      var Data = RosterEntry.data[0];
-      that.setState({
-        _id: Data._id,
-        memberName: Data.memberName, 
-        memberAddress: Data.memberAddress,
-        memberCity: Data.memberCity,
-        memberState: Data.memberState,
-        memberZip: Data.memberZip,
-        memberCellPhone: Data.memberCellPhone,
-        memberEmail: Data.memberEmail
-      });
-    });
-    this.props.scrollUp();
-  },
-
-  render: function() {
-    var typeaheadOptions = [];
-    this.state.RosterEntries.map(function(Item){
-      typeaheadOptions.push(Item.memberName);        
-    });
-
-    var that = this;
-    var RosterEntries = this.state.RosterEntries;
-    console.log(RosterEntries);
-    if (RosterEntries.length === 0) {
-      RosterEntries = [
-        {memberName: "Blank", 
-        memberAddress: "555 North Fifth Street 55555",
-        memberCity: "Nothingville",
-        memberState: "XX",
-        memberZip: "XXXXX",
-        memberCellPhone:"555-555-5555",
-        memberEmail: "nothing@blankemail.com"
-        },
-
-        {memberName: "Blank", 
-        memberAddress: "555 North Fifth Street 55555",
-        memberCity: "Nothingville",
-        memberState: "XX",
-        memberZip: "XXXXX",
-        memberCellPhone:"555-555-5555",
-        memberEmail: "nothing@blankemail.com"
+    enterSearch: function() {
+      var that = this;
+      var data = this.state.RosterEntries;
+      var query = this.state.searchQuery[0];
+      data.map(function(item, i) {
+        if (item.memberFullName === query) {
+          query = item._id;
+          console.log(query);
         }
-      ];
-    }
-    const componentStyle = {
-      fontFamily: "font-family: Lucida Console, Courier, monospace"
-    };
-    const inPanelStyle = {
-      backgroundColor:"transparent",
-      border: "none"
-    };
+    });
 
-    const panelHeadingStyle = {
-      margin: "0px 0px 0px 15px",
-      backgroundColor:"transparent",
-      border: "none"
-    };
+    helpers.getItem("Roster/getOne/" + query).then(function(SearchResults){
+      that.setState({RosterEntries: SearchResults.data});
+    });
+    },
 
-    const smallPanelStyle = {
-      backgroundColor:"white",
-      borderRadius: "7px"
-    };
+    handleChange: function(event) {
+        this.setState({ searchQuery: event });
+    },
 
-    const inputStyle = {
-      border: "1 px solid #cccccc",
-      width: "100%",
+    render: function() {
+        var typeaheadOptions = [];
+        var that = this;
+        var RosterEntries = [{
+            memberFirstName: "Blank",
+            memberLastName: "Blank",
+            memberAddress: "555 North Fifth Street 55555",
+            memberCity: "Nothingville",
+            memberState: "XX",
+            memberZip: "XXXXX",
+            memberCellPhone: "555-555-5555",
+            memberEmail: "nothing@blankemail.com"
+        }];
 
-    };
+        RosterEntries = this.state.RosterEntries;
+        RosterEntries.map(function(Item) {
+            typeaheadOptions.push(Item.memberLastName + ", " + Item.memberFirstName + " (" + Item.memberInformalName + ")");
+        });
 
-    const memberAddressStyle = {
-      fontSize: "20px"
-    };
+        const componentStyle = {
+            fontFamily: "font-family: Lucida Console, Courier, monospace"
+        };
+        const inPanelStyle = {
+            backgroundColor: "transparent",
+            border: "none"
+        };
 
-    const dateStyle = {
-      color: "#888eae"
-    };
+        const panelHeadingStyle = {
+            margin: "0px 0px 0px 15px",
+            backgroundColor: "transparent",
+            border: "none"
+        };
 
-    const searchButtonStyle = {
-      backgroundColor: "#888eae",
-      color: "white"
-    };
+        const smallPanelStyle = {
+            backgroundColor: "white",
+            borderRadius: "7px"
+        };
 
-    const searchStyle = {
-      width: "50%",
-      margin: "0px 0px 0px 2.5%",
-    };
+        const inputStyle = {
+            border: "1 px solid #cccccc",
+            width: "100%",
 
-    return (
-      <div className = 'row' style={componentStyle}> 
+        };
+
+        const memberAddressStyle = {
+            fontSize: "20px"
+        };
+
+        const dateStyle = {
+            color: "#888eae"
+        };
+
+        const searchButtonStyle = {
+            backgroundColor: "#888eae",
+            color: "white"
+        };
+
+        const searchStyle = {
+            width: "50%",
+            margin: "0px 0px 0px 2.5%",
+        };
+
+        return (
+            <div className = 'row' style={componentStyle}> 
             <div className="col-lg-12">
               <div className="panel panel-primary text-left" style={inPanelStyle}>
                 <br></br>
@@ -156,9 +111,9 @@ var Roster = React.createClass({
                 <br></br>
                 <form style = {searchStyle}>
                   <div className="form-group">
-                    <Typeahead options={typeaheadOptions} placeholder="Search for Mundane Club Members"/>
+                    <Typeahead options={typeaheadOptions} placeholder="Search for Mundane Club Members" onChange = {this.handleChange}/>
                   </div>
-                  <button type="submit" className="btn btn-default" style = {searchButtonStyle} onMouseEnter = {this.props.hoverLink} onMouseLeave = {this.props.unHoverLink}>Submit</button>
+                  <button type="submit" className="btn btn-default" style = {searchButtonStyle} onClick = {that.enterSearch} value = {this.state.searchQuery} onMouseEnter = {this.props.hoverLink} onMouseLeave = {this.props.unHoverLink}>Submit</button>
                 </form>
                 <div className="panel-body">
                     <div className="panel-body text-left blog-body">
@@ -167,28 +122,28 @@ var Roster = React.createClass({
                       <br></br>
                   {RosterEntries.map(function(entry, i) {
                       return (
-                        <div className = "rosterEntry" key = {i}>
+                        <div className = "memberEntry" key = {i}>
                           <div className="panel-body text-left schedule-item" style={smallPanelStyle}>
                               
-                              <p><b>Name:</b>{entry.memberName}</p>
-                              <p><b>Address:</b>{entry.memberAddress}</p>
-                              <p><b>City, State:</b>{entry.memberCity}, {entry.memberState}</p>
-                              <p><b>Zip:</b>{entry.memberZip}</p>
-                              <p><b>Cell Phone:</b>{entry.memberCellPhone}</p>
-                              <p><b>Email:</b>{entry.memberEmail}</p>
+                              <p><b>{entry.memberLastName}, {entry.memberFirstName} ({entry.memberInformalName})</b> </p>
+                              <p>{entry.memberAddress}</p>
+                              <p>{entry.memberCity}, {entry.memberState}</p>
+                              <p>{entry.memberZip}</p>
+                              <p>{entry.memberCellPhone}</p>
+                              <p>{entry.memberEmail}</p>
                           
                           </div>
                           <br></br> 
                           <br></br>
                         </div>                
                       );
-                    })}                
+                    })}              
                   </div>
                 </div>
               </div>
             </div>
       </div>
-    );
-  }
+        );
+    }
 });
 module.exports = Roster;
