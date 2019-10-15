@@ -51,7 +51,7 @@ router.post("/api/Roster/", function(req, res) {
 });
 
 router.get("/api/roster/getAll", function(req, res) {
-    Roster.find({}).exec(function(err, result) {
+    Roster.find({}).sort([["memberLastName", "ascending"]]).exec(function(err, result) {
         if (err) {
             throw err
         } 
@@ -63,12 +63,12 @@ router.get("/api/roster/getAll", function(req, res) {
 });
 
 router.get("/api/roster/getOne/:id", function(req, res) {
-    Roster.find({memberFullName: req.params.id}).exec(function(err, result) {
+    Roster.find({_id: req.params.id}).exec(function(err, result) {
         if (err) {
             throw err
         } 
         else {
-            console.log(result);
+            console.log("Here it is: " + result);
             return res.json(result);
         }
     });

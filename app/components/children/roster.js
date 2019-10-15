@@ -13,7 +13,10 @@ var Roster = React.createClass({
     componentDidMount: function() {
         var that = this;
         helpers.getItems("Roster/getAll").then(function(RosterEntries) {
-            that.setState({ RosterEntries: RosterEntries.data });
+            that.setState({
+              RosterEntries: RosterEntries.data, 
+              RosterEntriesVisible: RosterEntries.data
+            });
         });
     },
 
@@ -29,7 +32,8 @@ var Roster = React.createClass({
     });
 
     helpers.getItem("Roster/getOne/" + query).then(function(SearchResults){
-      that.setState({RosterEntries: SearchResults.data});
+      console.log(SearchResults);
+      that.setState({RosterEntriesVisible: SearchResults.data});
     });
     },
 
@@ -51,10 +55,30 @@ var Roster = React.createClass({
             memberEmail: "nothing@blankemail.com"
         }];
 
+        var RosterEntriesVisible = [{
+            memberFirstName: "Blank",
+            memberLastName: "Blank",
+            memberAddress: "555 North Fifth Street 55555",
+            memberCity: "Nothingville",
+            memberState: "XX",
+            memberZip: "XXXXX",
+            memberCellPhone: "555-555-5555",
+            memberEmail: "nothing@blankemail.com"
+        }];
+
+        if (this.state.RosterEntriesVisible) {
+           RosterEntriesVisible= this.state.RosterEntriesVisible;
+        }
+        if (this.state.RosterEntries) {
+           RosterEntries= this.state.RosterEntries;
+        }
+
         RosterEntries = this.state.RosterEntries;
+
         RosterEntries.map(function(Item) {
             typeaheadOptions.push(Item.memberLastName + ", " + Item.memberFirstName + " (" + Item.memberInformalName + ")");
         });
+        console.log(RosterEntriesVisible);
 
         const componentStyle = {
             fontFamily: "font-family: Lucida Console, Courier, monospace"
@@ -120,7 +144,7 @@ var Roster = React.createClass({
                       
                       <br></br>
                       <br></br>
-                  {RosterEntries.map(function(entry, i) {
+                  {RosterEntriesVisible.map(function(entry, i) {
                       return (
                         <div className = "memberEntry" key = {i}>
                           <div className="panel-body text-left schedule-item" style={smallPanelStyle}>
