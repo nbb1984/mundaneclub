@@ -31,8 +31,8 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // -------------------------------------------------
-// MongoDB Configuration configuration 
-mongoose.connect("mongodb://localhost/mundaneclub");
+// MongoDB Configuration configuration ("mongodb://localhost/mundaneclub")
+mongoose.connect(" mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub");
 //mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub
 var db = mongoose.connection;
 db.on("error", function(err) {
