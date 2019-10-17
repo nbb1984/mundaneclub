@@ -25,13 +25,13 @@
             <h1 class="text-center login-title">Mundane Club Website Registration Form</h1>
             <div class="account-wall">
             <div class = 'msg'></div>
-                <form class="button-size registration-form" value = "value">
+                <form class="button-size registration-form" method="POST" action="/registerUser"value = "value">
                     <input type="text" class = "form-control email" placeholder="Email" required autofocus>
                     <input type="password" class="form-control password" placeholder="Password" required>
                     <input type="password" class="form-control password2" placeholder="Repeat Password" required>
+                    <button class="btn btn-lg btn-primary btn-block submit-button" type="submit">
+                            Register</button>
                 </form>
-                <button class="btn btn-lg btn-primary btn-block submit-button" type="submit">
-                        Register</button>
                 <a href="login.html" class="text-center new-account">Go To Login </a>
                 <br>
                 <br>
