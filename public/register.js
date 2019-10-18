@@ -16,15 +16,17 @@ $(document).ready(function(){
 		var	email = $(".email").val();
 		var	password = $(".password").val();
 		var	password2 = $(".password2").val();
+		console.log(email, password, password2);
 
 	    $.post("/registerUser", {email: email, password: password, password2: password2}).then(function(result) {
-	    	console.log(result);
 	    	if (result.constructor === Array){
+	    		console.log("registration did not work");
 		    	for (var i = 0; i < result.length; i++){
 		    		$("<div class='alert alert-danger text-center' role='alert'>)").text(result[i].msg).appendTo(".msg");
 		    	}
 	    	}
-	    	else {	    		
+	    	else {	    	
+	    	console.log("registration worked!!");	
 		    	$("<div class='alert alert-success text-center' role='alert'>)").text("Congratulations.  You are successfully registered.  You may now go to the login page and login!").appendTo(".msg");
 	    	}
 

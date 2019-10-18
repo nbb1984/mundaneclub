@@ -9,6 +9,7 @@ var path = require("path");
 
 // Register User 
 router.post('/registerUser', function(req, res) {
+    console.log('registering user');
     
     var email = req.body.email;
     var password = req.body.password;
@@ -45,7 +46,7 @@ router.post('/registerUser', function(req, res) {
 
                 req.flash('success_msg', 'You are registered and can now login');
                 res.status(200);
-                res.redirect('/login?success');
+                res.redirect('/login');
 
             }
         }
@@ -97,12 +98,14 @@ router.get('/api/user', function(req, res) {
 router.post('/loginUser',
     passport.authenticate('local', { successRedirect: '/user', failureRedirect: '/login?error', failureFlash: true }),
     function(req, res) {
+        console.log("loginUser");
         res.redirect("/user" + req.user.email);
     });
 
 router.get('/logout', function(req, res) {
     req.logout();
     req.flash('success_msg', 'You are logged out');
+    console.log("you are now logged out");
 
     res.redirect('/login');
 });

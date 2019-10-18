@@ -31,16 +31,33 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 // -------------------------------------------------
-// MongoDB Configuration configuration ("mongodb://localhost/mundaneclub")
-mongoose.connect("mongodb://localhost/mundaneclub");
-//mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub
-var db = mongoose.connection;
-db.on("error", function(err) {
-  console.log("Mongoose Error: ", err);
+// // MongoDB Configuration configuration ("mongodb://localhost/mundaneclub")
+// mongoose.connect("mongodb://localhost/mundaneclub");
+// //mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub
+// var db = mongoose.connection;
+// db.on("error", function(err) {
+//   console.log("Mongoose Error: ", err);
+// });
+// db.once("open", function() {
+//   console.log("Mongoose connection successful.");
+// });
+
+// If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
+var db = process.env.MONGODB_URI || "mongodb://joyoflife:juju2017jasper@ds113606.mlab.com:13606/mundaneclub";
+
+// Connect mongoose to our database
+mongoose.connect(db, function(error) {
+  // Log any errors connecting with mongoose
+  if (error) {
+    console.log(error);
+  }
+  // Or log a success message
+  else {
+    console.log("mongoose connection is successful");
+  }
 });
-db.once("open", function() {
-  console.log("Mongoose connection successful.");
-});
+
+
 
 
 // Express Session
@@ -88,16 +105,14 @@ app.use(function (req, res, next) {
 console.log("server js ran");
 
 app.get("/login", function(req, res) {
+  console.log("yay!!!!");
   res.sendFile(__dirname + "/public/login.html");
 });
 
 app.get("/user", function(req, res) {
+  console.log('got the user from server js');
   res.sendFile(__dirname + "/public/index2.html");
 });
-
-// // This is the route we will send GET requests to retrieve our most recent search data.
-// // We will call this route the moment our page gets rendered
-
 
 app.use('/', routes);
 app.use('/', users);

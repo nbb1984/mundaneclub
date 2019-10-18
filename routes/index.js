@@ -3,6 +3,7 @@ var router = express.Router();
 // Get Homepage
 router.get('/', ensureAuthenticated, function(req, res){
 	console.log(req.body);
+	console.log("user success");
 	res.redirect('/user');
 });
 
