@@ -138,6 +138,7 @@ var ScheduleEdit = React.createClass({
   },
 
   handleCommentSubmit: function (event) {
+    event.preventDefault();
     var that = this;
     var i = event.target.id;
     var id = event.target.className;
@@ -174,19 +175,39 @@ var ScheduleEdit = React.createClass({
 
   handleCommentDelete: function(event) {
     var that = this;
-    var commentId = event.target.id;
-    var ScheduleItemId = event.target.value;
-    var commentDeleteButtonClicked = this.state.commentDeleteButtonClicked;
+  
+    var i = event.target.value;//scheduleitem id
+    var j = event.target.id;//comment id
+    var k = event.target.className;
 
-    helpers.deleteItem("Schedule/deleteComment/" + ScheduleItemId + "/" + commentId).then(function(){
+    var ScheduleItems = this.state.ScheduleItems;
+    console.log(event.target);
+
+    // var id = ScheduleItems[j]._id;
+
+
+    helpers.deleteItem("Schedule/deleteComment/" + i + "/" + j).then(function(ScheduleItems){
       helpers.getItems("Schedule/getAll").then(function(ScheduleItems){
-        commentDeleteButtonClicked.splice(commentId, 1);
-        that.setState({
-          ScheduleItems:ScheduleItems.data,
-          commentDeleteButtonClicked: commentDeleteButtonClicked
-        });
+        ScheduleItems.data[k].eventCommentsVisible = true;
+          that.setState({
+            ScheduleItems:ScheduleItems.data,
+            ScheduleItemsVisible: ScheduleItems.data
+          });
       });
     });
+    // var that = this;
+    // var commentId = event.target.id;
+    // var ScheduleItemId = event.target.value;
+    // var commentDeleteButtonClicked = this.state.commentDeleteButtonClicked;
+    // helpers.deleteItem("Schedule/deleteComment/" + ScheduleItemId + "/" + commentId).then(function(){
+    //   helpers.getItems("Schedule/getAll").then(function(ScheduleItems){
+    //     commentDeleteButtonClicked.splice(commentId, 1);
+    //     that.setState({
+    //       ScheduleItems:ScheduleItems.data,
+    //       commentDeleteButtonClicked: commentDeleteButtonClicked
+    //     });
+    //   });
+    // });
   },
 
   render: function() {
@@ -442,19 +463,20 @@ var ScheduleEdit = React.createClass({
                                   </div>
                                   <div>
                                     {commentsVisibility[i] === "visible" ? (
-                                          ScheduleItems[i].eventComments.map(function(post, i) {
+                                          ScheduleItems[i].eventComments.map(function(post, j) {
+                                            console.log(j);
                                             return (
-                                              <div className = "scheduleItem" key = {i}>
+                                              <div className = "scheduleItem" key = {j}>
                                                 <div className="panel-body text-left schedule-item" style={smallPanelStyle}>
                                                     
                                                     <p><b> {post.postAuthor}</b> <i> posted {post.commentDate}</i></p>
                                                     <p>{post.postContent}</p>
-                                                    <div style = {commentDeleteStyle} onClick = {that.handleCommentDeleteButtonClick} id = {i}><i id= {i}>Delete</i></div>            
+                                                    <div style = {commentDeleteStyle} onClick = {that.handleCommentDeleteButtonClick} id = {j}><i id= {j}>Delete</i></div>            
                                                     <div>
-                                                      {commentDeleteButtonClicked[i] === true ? (
+                                                      {commentDeleteButtonClicked[j] === true ? (
                                                         <div className = "confirmCommentDelete">
                                                           <p style = {confirmCommentDeleteStyle}>Do you want to delete this comment?</p>
-                                                          <button id = {post._id} value = {item._id} onClick = {that.handleCommentDelete}>Yes</button><button id = {i} onClick = {that.handleCommentDeleteButtonClick}>No</button>
+                                                          <button id = {post._id} value = {item._id} className = {i} onClick = {that.handleCommentDelete}>Yes</button><button id = {j} onClick = {that.handleCommentDeleteButtonClick}>No</button>
                                                         </div>
                                                         ):(null)
                                                       }
