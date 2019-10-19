@@ -104,6 +104,7 @@ var Schedule = React.createClass({
 
   handleCommentSubmit: function (event) {
 
+    event.preventDefault();
     var that = this;
     var id = event.target.id;
     var ScheduleItems = this.state.ScheduleItems;
