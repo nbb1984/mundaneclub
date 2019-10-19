@@ -18,6 +18,7 @@ router.post('/registerUser', function(req, res) {
     User.getUserByEmail(email, function(err, user) {
         if (err) throw err;
         if (user) {
+            console.log(user);
             return res.json([{ param: 'email', msg: 'Email already exists' }]);
         } else {
 
@@ -46,7 +47,7 @@ router.post('/registerUser', function(req, res) {
 
                 req.flash('success_msg', 'You are registered and can now login');
                 res.status(200);
-                res.redirect('/login');
+                res.redirect('/login?success');
 
             }
         }
