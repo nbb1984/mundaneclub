@@ -8,6 +8,9 @@ var ScheduleSchema = new Schema({
   eventName: {
     type: String
   },
+  eventHostesses: {
+    type: String
+  },
   eventLocation: { 
   	type: String 
   },

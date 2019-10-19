@@ -57,7 +57,6 @@ var Schedule = React.createClass({
     data.map(function(item, i) {
     	if (item.eventName === query || item.eventLocation === query || item.eventDate === query || item.eventDescription === query) {
     		query = item._id;
-    		console.log(query);
     	}
     });
 
@@ -114,7 +113,6 @@ var Schedule = React.createClass({
       postContent: that.state.postContent
     }).then(function() { 
       helpers.getItems("Schedule/getAll").then(function(ScheduleItems){
-        console.log(ScheduleItems.data);
         ScheduleItems.data[i].eventCommentsVisible = true;
           that.setState({
             ScheduleItems:ScheduleItems.data,
@@ -169,6 +167,7 @@ var Schedule = React.createClass({
     var that = this;
     var ScheduleItems = [        
     	{eventName: "Nothing", 
+      eventHostesses: "Nothing",
         eventLocation: "Nothing",
         googleMapsUrl: "maps.google.com",
         eventDate: "October 8, 2010",
@@ -279,6 +278,7 @@ var Schedule = React.createClass({
                             <div className = "scheduleItem" key = {i}>
                               <div className="panel-body text-left schedule-item" style={smallPanelStyle}>  
                                   <p><b>Event Name:</b> {item.eventName}</p>
+                                  <p><b>Hostesses:</b> {item.eventHostesses}</p>
                                   <p><b>Location:</b> {item.eventLocation} <a href = {item.googleMapsUrl} target="_blank">Directions On Google Maps</a></p>
                                   <p><b>Date:</b> {item.eventDate}</p>
                                   <p><b>Time:</b> {item.eventTime}</p>

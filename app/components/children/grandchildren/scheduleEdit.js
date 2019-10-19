@@ -52,6 +52,7 @@ var ScheduleEdit = React.createClass({
     helpers.createItem("Schedule/", {
 
       eventName: that.state.eventName,
+      eventHostesses: that.state.eventHostesses,
       eventLocation: that.state.eventLocation,
       googleMapsUrl: that.state.googleMapsUrl,
       eventDate: that.state.eventDate,
@@ -77,7 +78,7 @@ var ScheduleEdit = React.createClass({
 				console.log(that.state.editClicked);
 				that.setState({
 				  ScheduleItems:ScheduleItems.data
-				});
+				}, function() {console.log(that.state.ScheduleItems);});
 			});
 		}
     });
@@ -93,6 +94,7 @@ var ScheduleEdit = React.createClass({
       	editClicked: true,
         _id: Data._id,
         eventName: Data.eventName, 
+        eventHostesses: Data.eventHostesses,
         eventLocation: Data.eventLocation,
         googleMapsUrl: Data.googleMapsUrl,
         eventDate: Data.eventDate,
@@ -219,6 +221,7 @@ var ScheduleEdit = React.createClass({
     var that = this;
     var ScheduleItems = [
         {eventName: "Nothing", 
+        eventHostesses: "Nothing",
         eventLocation: "Nothing",
         googleMapsUrl: "maps.google.com",
         eventDate: "October 8, 2010",
@@ -314,6 +317,15 @@ var ScheduleEdit = React.createClass({
                           className="form-control text-left"
                           id="eventName"
                           required
+                          style={inputStyle}
+                        />
+                        <input
+                          value = {this.state.eventHostesses}
+                          onChange = {this.handleChange}
+                          placeholder="Hostesses"
+                          type="text"
+                          className="form-control text-left"
+                          id="eventHostesses"
                           style={inputStyle}
                         />
                         <input
@@ -414,6 +426,7 @@ var ScheduleEdit = React.createClass({
                             <div className = "scheduleItem" key = {i}>
                               <div className="panel-body text-left schedule-item" style={smallPanelStyle}>  
                                   <p><b>Event Name:</b> {item.eventName}</p>
+                                  <p><b>Hostesses:</b> {item.eventHostesses}</p>
                                   <p><b>Location:</b> {item.eventLocation} <a href = {item.googleMapsUrl} target="_blank">Directions On Google Maps</a></p>
                                   <p><b>Date:</b> {item.eventDate}</p>
                                   <p><b>Time:</b> {item.eventTime}</p>

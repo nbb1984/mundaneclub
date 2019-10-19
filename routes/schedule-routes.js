@@ -9,6 +9,7 @@ router.post("/api/Schedule", function(req, res) {
 
         var newScheduleInfo = {
             eventName: req.body.eventName, 
+            eventHostesses: req.body.eventHostesses,
             eventLocation: req.body.eventLocation,
             googleMapsUrl: req.body.googleMapsUrl,
             eventDate: req.body.eventDate,
