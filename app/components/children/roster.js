@@ -114,7 +114,7 @@ var Roster = React.createClass({
         };
 
         const searchButtonStyle = {
-            backgroundColor: "#888eae",
+            backgroundColor: "#3ae693",
             color: "white"
         };
 
@@ -151,7 +151,7 @@ var Roster = React.createClass({
                               
                               <p><b>{entry.memberLastName}, {entry.memberFirstName} ({entry.memberInformalName})</b> </p>
                               <p>{entry.memberAddress}</p>
-                              <p>{entry.memberCity}, {entry.memberState}</p>
+                              <p>{entry.memberCity} {entry.memberState}</p>
                               <p>{entry.memberZip}</p>
                               <p>{entry.memberCellPhone}</p>
                               <p>{entry.memberEmail}</p>

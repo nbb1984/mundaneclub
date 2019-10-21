@@ -12,7 +12,7 @@ router.post("/api/Roster/", function(req, res) {
             'memberInformalName': req.body.memberInformalName,
             'memberFullName': req.body.memberLastName + ', ' + req.body.memberFirstName +  ' (' + req.body.memberInformalName + ')',
             'memberAddress': req.body.memberAddress,
-            'memberCity': req.body.memberCity,
+            'memberCity': req.body.memberCity + ',',
             'memberState': req.body.memberState,
             'memberZip': req.body.memberZip,
             'memberEmail': req.body.memberEmail,

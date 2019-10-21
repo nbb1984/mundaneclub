@@ -227,7 +227,7 @@ var Schedule = React.createClass({
     };
 
     const searchButtonStyle = {
-      backgroundColor: "#888eae",
+      backgroundColor: "#3ae693",
       color: "white"
     };
 

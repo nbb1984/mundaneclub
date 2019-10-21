@@ -134,21 +134,12 @@ var Main = React.createClass({
     });
   },
 
-
-  handleEdit: function(event) {
-
-  },
-
   handleSubmit: function() {
   	location.hash = this.state.term;
   },
 
-  handleDelete: function(){
-
-  },
-
   hoverLink: function (event) {
-    event.target.style.color = "pink";
+    event.target.style.color = "#23935d";
   },
 
   unHoverLink: function(event) {
@@ -187,7 +178,7 @@ var Main = React.createClass({
     });
 
     const mainComponentStyle = {
-      backgroundColor: '#00acee',
+      backgroundColor: '#3ae693',
       minHeight: "700px"
     };
 
@@ -216,11 +207,6 @@ var Main = React.createClass({
     const inputFormStyle = {
           border: "1px solid #cccccc",
           width: "100%"
-    };
-    const searchButtonStyle = {
-          backgroundColor: "#888eae",
-          color:"white",
-          border: "1px solid white"
     };
 
 

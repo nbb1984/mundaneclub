@@ -119,6 +119,11 @@ var Blog = React.createClass({
           border: "1 px solid #cccccc",
           color: "#888eae"
         };
+
+        const submitButtonStyle = {
+          backgroundColor: "#3ae693",
+          color: "white"
+        };
         return (
             <div className = 'row' style={componentStyle}> 
           <div className="col-lg-12">
@@ -157,6 +162,9 @@ var Blog = React.createClass({
                         <button
                           className="btn btn-default blue"
                           type="submit"
+                          style = {submitButtonStyle}
+                          onMouseEnter = {that.props.hoverLink}
+                          onMouseLeave = {that.props.unHoverLink}
                         >
                           Submit
                         </button>
